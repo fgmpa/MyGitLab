@@ -78,49 +78,7 @@ class Data:
             yield self.data[self.pointer]
             self.pointer += 1
 
-    @staticmethod
-    def parse(file):
-        parsed = []
-        with open(file, "r") as raw_csv:
-            for line in raw_csv:
-                (idx, date, is_workplace, room_num) = line.replace("\n", "").split(";")
-                parsed.append(
-                    OfficeMove(int(idx), date, bool(is_workplace), int(room_num))
-                )
-        return parsed
-
-    def sorted_by_date(self):
-        return sorted(self.data, key=lambda f: f.date)
-
-    def sorted_by_room_num(self):
-        return sorted(self.data, key=lambda f: f.room_num)
-
-    def value(self, value):
-        r = []
-        for d in self.data:
-            if d.room_num == value:
-                r.append(d)
-        return r
-
-    def add_new(self, date, is_workplace, room_num):
-        self.data.append(
-            OfficeMove(len(self.data) + 1, date, is_workplace, room_num)
-        )
-        self.save(self.file_path, self.data)
-
-    @staticmethod
-    def save(file, new_data):
-        with open(file, "w", encoding='utf-8') as f:
-            for r in new_data:
-                f.write(f"{r.idx};{r.date};{int(r.is_workplace)};{r.room_num}\n")
-
-    def print(self):
-        for r in self.data:
-            print(f'№{r.idx}, дата и время: {r.date}, рабочее место: {r.is_workplace}, номер комнаты: {r.room_num}')
-
-    @staticmethod
-    def print_d(d):
-        for r in d:
+   
             print(f'№{r.idx}, дата и время: {r.date}, рабочее место: {r.is_workplace}, номер комнаты: {r.room_num}')
 
 
